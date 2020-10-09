@@ -16,6 +16,10 @@ type Route struct {
 	Handler http.HandlerFunc
 }
 
+func NewRouter() *Router {
+		return &Router{}
+}
+
 func (r *Router) SetRoute(method, scheme string, handler http.HandlerFunc) *Route {
 	route := &Route{method, "^" + scheme + "$", handler}
 	r.routes = append(r.routes, route)

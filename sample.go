@@ -9,7 +9,7 @@ import (
 )
 
 func main() {
-	r := &rtr.Router{}
+	r := rtr.NewRouter()
 	r.SetRoute("GET", "/api/books", listBooks)
 	r.SetRoute("GET", "/api/books/([0-9]+)", getBook)
 	// r.SetRoute("POST", "/api/books", createBook),
