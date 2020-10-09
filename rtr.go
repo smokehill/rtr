@@ -17,7 +17,7 @@ type Route struct {
 	// Request method [GET, POST, ...].
 	Method string
 	// URL regex pattern.
-	Scheme string
+	Pattern string
 	// Route handler function.
 	Handler http.HandlerFunc
 }
@@ -28,8 +28,8 @@ func NewRouter() *Router {
 }
 
 // SetRoute returns a new router instance.
-func (r *Router) SetRoute(method,scheme string, handler http.HandlerFunc) *Route {
-	route := &Route{method, "^" + scheme + "$", handler}
+func (r *Router) SetRoute(method, pattern string, handler http.HandlerFunc) *Route {
+	route := &Route{method, "^" + pattern + "$", handler}
 	r.routes = append(r.routes, route)
 
 	return route
@@ -40,7 +40,7 @@ func (r *Router) ServeHTTP(rw http.ResponseWriter, rq *http.Request) {
 	match, allow := false, false
 
 	for _, route := range r.routes {
-		match, _ = regexp.MatchString(route.Scheme, rq.URL.Path)
+		match, _ = regexp.MatchString(route.Pattern, rq.URL.Path)
 		if rq.Method == route.Method && match == true {
 			allow = true
 			route.Handler(rw, rq)
