@@ -1,8 +1,10 @@
 package rtr
 
 import (
+	"strings"
 	"regexp"
 	"net/http"
+	"net/url"
 )
 
 // Router registers routes.
@@ -26,7 +28,7 @@ func NewRouter() *Router {
 }
 
 // SetRoute returns a new router instance.
-func (r *Router) SetRoute(method, scheme string, handler http.HandlerFunc) *Route {
+func (r *Router) SetRoute(method,scheme string, handler http.HandlerFunc) *Route {
 	route := &Route{method, "^" + scheme + "$", handler}
 	r.routes = append(r.routes, route)
 
@@ -52,4 +54,12 @@ func (r *Router) ServeHTTP(rw http.ResponseWriter, rq *http.Request) {
 	}
 
 	http.NotFound(rw, rq)
+}
+
+// Helper functions
+// -----------------------------------------------------------------------------
+
+// SplitURL splits url into array of parts.
+func SplitURL(url *url.URL) []string {
+	return strings.Split(strings.Trim(url.String(), "/"), "/")
 }
