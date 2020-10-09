@@ -1,7 +1,6 @@
 package rtr
 
 import (
-	// "fmt"
 	"regexp"
 	"net/http"
 )
