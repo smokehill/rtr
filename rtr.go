@@ -35,8 +35,8 @@ func (r *Router) SetRoute(methods string, pattern string, handler http.HandlerFu
 	return route
 }
 
-// HasMethod checks if route contains method.
-func (r *Route) HasMethod(method string) bool {
+// hasMethod checks if route contains method.
+func (r *Route) hasMethod(method string) bool {
 	for _, m := range r.methods {
 		if m == method {
 			return true
@@ -51,7 +51,7 @@ func (r *Router) ServeHTTP(rw http.ResponseWriter, rq *http.Request) {
 
 	for _, route := range r.routes {
 		match, _ = regexp.MatchString(route.Pattern, rq.URL.Path)
-		if route.HasMethod(rq.Method) == true && match == true {
+		if route.hasMethod(rq.Method) == true && match == true {
 			allow = true
 			route.Handler(rw, rq)
 			return
@@ -65,9 +65,6 @@ func (r *Router) ServeHTTP(rw http.ResponseWriter, rq *http.Request) {
 
 	http.NotFound(rw, rq)
 }
-
-// Helper functions
-// -----------------------------------------------------------------------------
 
 // SplitURL splits url into array of parts.
 func SplitURL(url *url.URL) []string {
