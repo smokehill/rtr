@@ -8,7 +8,7 @@ RTR - regex table router. Simple HTTP router for building Go web apps.
 go get -u github.com/smokehill/rtr
 ```
 
-## Examples
+## Example
 
 ```go
 func main() {
