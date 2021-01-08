@@ -1,5 +1,7 @@
 # RTR
 
+[![Build Status](https://travis-ci.com/smokehill/rtr.svg?branch=master)](https://travis-ci.com/smokehill/rtr)
+
 RTR - regex table router. Simple HTTP router for building Go web apps.
 
 ## Install
