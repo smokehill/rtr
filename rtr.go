@@ -7,27 +7,20 @@ import (
 	"net/url"
 )
 
-// Router registers routes.
 type Router struct {
 	routes []*Route
 }
 
-// Route stores information about set route.
 type Route struct {
-	// Request methods ["GET", "POST", ...].
-	methods []string
-	// URL regex pattern.
-	Pattern string
-	// Route handler function.
+	methods []string          // request methods ["GET", "POST", ...]
+	Pattern string            // URL regex pattern
 	Handler http.HandlerFunc
 }
 
-// NewRouter returns a new router instance.
 func NewRouter() *Router {
 	return &Router{}
 }
 
-// SetRoute returns a new router instance.
 func (r *Router) SetRoute(methods string, pattern string, handler http.HandlerFunc) *Route {
 	route := &Route{prepareRouteMethods(methods), "^" + pattern + "$", handler}
 	r.routes = append(r.routes, route)
@@ -35,7 +28,6 @@ func (r *Router) SetRoute(methods string, pattern string, handler http.HandlerFu
 	return route
 }
 
-// hasMethod checks if route contains method.
 func (r *Route) hasMethod(method string) bool {
 	for _, m := range r.methods {
 		if m == method {
@@ -45,7 +37,6 @@ func (r *Route) hasMethod(method string) bool {
 	return false
 }
 
-// ServeHTTP dispatches the handler registered in set routes.
 func (r *Router) ServeHTTP(rw http.ResponseWriter, rq *http.Request) {
 	match, allow := false, false
 
@@ -66,12 +57,11 @@ func (r *Router) ServeHTTP(rw http.ResponseWriter, rq *http.Request) {
 	http.NotFound(rw, rq)
 }
 
-// SplitURL splits url into array of parts.
 func SplitURL(url *url.URL) []string {
 	return strings.Split(strings.Trim(url.String(), "/"), "/")
 }
 
-// prepareRouteMethods prepares methods from string to array of values.
+// Prepares methods from string to array of values.
 // "GET, POST, ..." => ["GET", "POST", ...]
 func prepareRouteMethods(methods string) []string {
 	m := methods
