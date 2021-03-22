@@ -61,8 +61,6 @@ func SplitURL(url *url.URL) []string {
 	return strings.Split(strings.Trim(url.String(), "/"), "/")
 }
 
-// Prepares methods from string to array of values.
-// "GET, POST, ..." => ["GET", "POST", ...]
 func prepareRouteMethods(methods string) []string {
 	m := methods
 	m = strings.Replace(m, " ", "", -1)
